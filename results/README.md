@@ -1,7 +1,10 @@
-# Resultados E2
+# Resultados exploratorios E2 — Grupo 11
 
-Este directorio se reserva para tablas, gráficas y registros obtenidos al ejecutar el notebook. No se incluyen métricas sin salida experimental verificable.
+Datos procedentes de la ejecución rápida con Tesla T4 (semilla 42, 3,000 imágenes de entrenamiento, una época, test exploratorio de 1,000 imágenes).
 
-En la copia del notebook incorporada existen registros de validación Top-1 de 95.12% (época 1) y 94.84% (época 2). No corresponden a test final ni a variantes comprimidas.
+- `resultados_e2.csv`: accuracy Top-1, tamaño de checkpoint serializado, latencia y VRAM para FP32, Fake-INT8 MHSA/MLP y FP16.
+- `teardown_por_bloque.csv`: parámetros y FLOPs analíticos aproximados para los 12 encoder blocks.
+- `train_history.csv`: validación después de la época.
+- `run_config.json`: entorno, tamaño de subconjuntos y parámetros de corrida.
 
-Pendiente: ejecutar profiling, test, ablations y medir entorno/hardware; subir resultados con parámetros y semillas.
+**Precauciones:** resultados exploratorios, no test final de 10,000 imágenes. Fake-INT8 no genera almacenamiento INT8 real. Las figuras PNG originales están en el ZIP recibido por el equipo y aparecen incrustadas en el notebook ejecutado, pero aún no están publicadas como archivos PNG independientes en GitHub. Consultar `DESIGN_LOG.md` para las limitaciones e interpretación de H1.
