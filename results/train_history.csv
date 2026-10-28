@@ -1,0 +1,2 @@
+epoch,val_top1,sum_train_batch_losses
+1,94.13333333333334,140.51107215881348
