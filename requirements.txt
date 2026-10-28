@@ -1,0 +1,9 @@
+# Dependencias directas del notebook E2 (versiones según entorno)
+torch
+torchvision
+numpy
+matplotlib
+pandas
+Pillow
+tqdm
+ptflops
