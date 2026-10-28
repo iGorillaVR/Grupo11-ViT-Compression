@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "pytorch": "2.11.0+cu130",
+  "torchvision": "0.26.0+cu130",
+  "hardware": "Tesla T4",
+  "device": "cuda",
+  "weights": "ViT_B_16_Weights.IMAGENET1K_V1",
+  "input_shape": [
+    3,
+    224,
+    224
+  ],
+  "normalization": "ImageNet mean/std",
+  "N_TRAIN": 3000,
+  "VAL": 750,
+  "TEST": 1000,
+  "validation_split_total": 5000,
+  "test_split_total": 10000,
+  "run_type": "exploratorio_no_final",
+  "BATCH": 16,
+  "EPOCHS": 1,
+  "train_last_blocks": 2,
+  "quant_method": "per-tensor symmetric weight fake-quant dequant, 8-bit (no integer execution)",
+  "commit": "registrar hash del repo después de subir"
+}
