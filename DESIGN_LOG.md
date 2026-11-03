@@ -53,3 +53,20 @@ Los valores de validación provienen de salidas **guardadas** en la copia del no
 **Archivos verificables:** `results/resultados_e2.csv`, `results/train_history.csv`, `results/teardown_por_bloque.csv`, `results/run_config.json`. Los PNG exportados se conservan en el ZIP original recibido, pero aún no están publicados como ficheros independientes en GitHub. El notebook ejecutado contiene las figuras incrustadas.
 
 **Asistencia IA (actualización):** ChatGPT interpretó los resultados del ZIP, transcribió los datos a la carpeta `results/` y redactó esta síntesis; la ejecución del entrenamiento no fue realizada por ChatGPT.
+
+
+## E3 — ejecución final y diagnóstico de cuantización (3 de noviembre de 2026)
+
+**Evidencia:** `notebooks/Grupo11_E3_ViT_CIFAR10_FINAL.ipynb` contiene outputs ejecutados (16 celdas de código sin errores de ejecución). CSV extraídos de sus salidas en `results/e3/`; los gráficos están incrustados en el notebook. Las salidas de E3 no deben confundirse con la corrida exploratoria de E2.
+
+**Protocolo:** TorchVision ViT-B/16 IMAGENET1K_V1, clasificación CIFAR-10, semilla 42, GPU Tesla T4, PyTorch 2.11.0+cu130 y torchvision 0.26.0+cu130; 15 000 imágenes de entrenamiento (finetuning de los 2 últimos bloques y head), 5 000 validación, 10 000 test, batch 16, 3 épocas, LR 3e-5. El mejor checkpoint por validación obtuvo **95.64% en validación** y **95.60% accuracy clean test**. Esta corrida no prueba entrenamiento con 45 000 imágenes ni múltiples semillas.
+
+**Fase A:** 85 806 346 parámetros; FLOPs de encoder por bloque estimados analíticamente en 2 907 909 120 (34.89 GFLOPs en 12 bloques, sin embedding/head ni operaciones omitidas). Mapas de similitud CLS y gradiente espacial son proxies y no muestran atención ni campo receptivo causal exactos.
+
+**Fase B (hipótesis H1 previa):** se esperaba que la intervención numérica de MHSA perjudicara más que MLP. Clean accuracy: FP32 **95.60%**; FP16 **95.61%**; fake INT8 MHSA **95.58%**, MLP **95.56%**; fake INT4 MHSA **91.25%**, MLP **12.32%**. **H1 no fue apoyada en esta corrida.** Fake-INT8/INT4 cuantizan y de-cuantizan pesos, por lo que mantienen almacenamiento FP32 y no permiten afirmar aceleración/tamaño INT8/INT4 real. Solo FP16 representa reducción efectiva de checkpoint, de 343.29 MB a 171.67 MB. Los valores de latencia/VRAM son observaciones de una sesión y pueden depender del orden/estado de GPU; requieren medición aislada antes de comparaciones causales.
+
+**Diagnóstico adicional post hoc:** con 2 000 imágenes clean, FP32 **96.20%** (10 clases predichas), fake INT4 MHSA **91.80%** (10 clases), fake INT4 MLP **13.35%** (5 clases). Dos repeticiones idénticas de fake INT4 MLP dieron 13.35%; **74.7% de predicciones fueron de clase 8**. Apoya el colapso de predicciones bajo este procedimiento de cuantización, pero no es réplica con semillas/modelos independientes ni prueba causal de un mecanismo interno específico. El diagnóstico se definió después del experimento principal (no pre-registrado).
+
+**Fase C:** CIFAR-10-C, tres corrupciones (`gaussian_noise`, `defocus_blur`, `fog`), severidades 1/3/5 y **2 000 imágenes por condición**. Se evaluaron FP32, FP16 y fake INT8 MHSA/MLP (no INT4 en C). En FP32, accuracy promediada entre tres corrupciones: **93.18%**, **84.07%**, **67.35%** para severidades 1,3,5. Variantes FP16 e INT8 simulado mostraron diferencias pequeñas en este subconjunto. No generalizar a las 15 corrupciones ni a todas las 10 000 imágenes por severidad.
+
+**Limitaciones y asistencia de IA:** un único checkpoint/semilla, fine-tuning parcial, fake-quant sin empaquetado real, tres corrupciones seleccionadas, subconjunto de prueba C, estimación FLOPs incompleta y VRAM no aislada. Se utilizó ChatGPT para estructurar notebooks, generar código de pruebas/reproducibilidad y redactar diagnósticos; las interpretaciones deben ser revisadas y defendidas por los integrantes. Los pesos/checkpoints/datasets no se incluyen en GitHub. El ZIP exportado dentro de Colab no está acreditado como archivo almacenado en Drive y no se ha versionado; los CSV aquí publicados se reconstruyeron desde los outputs de notebook.
