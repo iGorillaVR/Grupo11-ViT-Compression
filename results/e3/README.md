@@ -1,16 +1,20 @@
-# Evidencia de la ejecución E3 (3 noviembre 2026)
+# Resultados de la ejecución E3
 
-Los archivos CSV fueron reconstruidos **literalmente de las salidas visibles** del notebook ejecutado publicado en `notebooks/Grupo11_E3_ViT_CIFAR10_FINAL.ipynb` (no se alteraron métricas). `resultados_ab.csv`: baseline/ablaciones, incluyendo FP16. `resultados_cifar10c.csv`: 36 evaluaciones, 2 000 imágenes por corrupción/severidad. `diagnostico_int4.csv` y `diagnostico_int4_clases.csv`: prueba adicional posterior. Las figuras están insertadas como outputs en el notebook.
+Reunimos aquí los archivos que respaldan los experimentos de nuestro notebook [`Grupo11_E3_ViT_CIFAR10_FINAL.ipynb`](../../notebooks/Grupo11_E3_ViT_CIFAR10_FINAL.ipynb), ejecutado el 3 de noviembre de 2026. Distinguimos los resultados exportados directamente desde Colab de las tablas reconstruidas a partir de las salidas visibles.
 
-El ZIP local que emitió Colab no está disponible en Drive para copiarlo al repositorio; estas tablas sirven como respaldo revisable de los resultados observados. Los datos completos y checkpoints siguen en Google Drive del ejecutor, no se versionan binarios grandes. No confundir fake-quant con compresión INT8/INT4 real.
+## Evidencia experimental
 
-## ZIP reproducido
-El archivo [`grupo11_e3_resultados_verificados.zip`](grupo11_e3_resultados_verificados.zip) empaqueta los cuatro CSV publicados y el README que estaba disponible al crear el paquete. **No es el ZIP original generado en Colab** ni incluye PNG o checkpoints.
+- [`grupo11_e3_resultados_original.zip`](grupo11_e3_resultados_original.zip): archivo original exportado durante la ejecución. Contiene tablas de los experimentos, teardown por bloque, `run_config.json` y cuatro gráficos: `ablacion_accuracy.png`, `features_intermedias.png`, `campo_influencia_gradiente.png` y `robustez_severidad.png`.
+- `resultados_ab.csv`: tabla de FP32, FP16 y ablaciones INT8/INT4 simuladas, transcrita de las salidas del notebook.
+- `resultados_cifar10c.csv`: 36 evaluaciones correspondientes a cuatro variantes, tres corrupciones y tres severidades, con 2 000 imágenes por condición. Contrastamos sus cifras de exactitud con el ZIP original y no encontramos discrepancias.
+- `diagnostico_int4.csv` y `diagnostico_int4_clases.csv`: resultados de la prueba complementaria realizada **después** de generar el ZIP original. Registramos la exactitud y la distribución de clases predichas.
 
-## Archivo original de Colab (añadido posteriormente)
+Las exactitudes de las seis variantes incluidas en el CSV reconstruido de la Fase B coinciden con las medidas del ZIP original. Este último conserva también campos adicionales y las figuras generadas en la ejecución.
 
-Se recibió y contrastó el ZIP auténtico de la primera exportación de Colab: [`grupo11_e3_resultados_original.zip`](grupo11_e3_resultados_original.zip) (516 033 bytes). Este **sí** contiene las tablas originales del experimento, el teardown, `run_config.json` y cuatro figuras PNG (`ablacion_accuracy.png`, `features_intermedias.png`, `campo_influencia_gradiente.png`, `robustez_severidad.png`). Las métricas de accuracy de `resultados_e2.csv` coinciden con `resultados_ab.csv` publicado; las 36 condiciones y valores de accuracy de `resultados_cifar10c.csv` coinciden con la tabla CSV reconstruida. El ZIP original añade columnas de caída de precisión que no estaban en la reconstrucción.
+## Trazabilidad
 
-**Diferencia temporal:** el ZIP se creó antes de la celda de diagnóstico INT4 incorporada al final del notebook. Por ello, **no incluye** `diagnostico_int4.csv` ni `diagnostico_int4_clases.csv`, que permanecen publicados por separado. El archivo `run_config.json` conserva los campos de plantilla `run_type: E3_pending_confirmation` y `github_commit: completar ...`; son metadatos incompletos de exportación, **no** indican que la ejecución haya quedado pendiente. El notebook ejecutado y el commit son la evidencia de esa ejecución.
+Mantenemos [`grupo11_e3_resultados_verificados.zip`](grupo11_e3_resultados_verificados.zip) como respaldo de la reconstrucción anterior de los CSV. Para consultar los archivos generados originalmente en Colab, priorizamos el ZIP `_original.zip`; para el diagnóstico posterior de INT4 utilizamos los CSV independientes.
 
-Para el informe preferir los CSV originales y gráficos de este ZIP y los dos archivos adicionales de diagnóstico. El ZIP `_verificados.zip` anterior se conserva para mantener trazabilidad, pero ya no es necesario como fuente primaria.
+En el `run_config.json` original quedaron sin actualizar los campos `run_type: E3_pending_confirmation` y `github_commit: completar ...`. Los identificamos como marcadores de la plantilla de exportación y no como evidencia de una ejecución incompleta; el notebook contiene las salidas finales. Conservamos ese archivo sin modificar para preservar su procedencia.
+
+No incluimos en GitHub el checkpoint entrenado ni los datasets de gran tamaño. Reconocemos que las variantes INT8/INT4 constituyen cuantización simulada y que las medidas de rendimiento requieren controles adicionales para establecer conclusiones generales. Nuestra interpretación detallada se encuentra en [`DESIGN_LOG.md`](../../DESIGN_LOG.md).
