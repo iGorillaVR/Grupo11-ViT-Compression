@@ -1,10 +1,12 @@
-# Resultados exploratorios E2 — Grupo 11
+# Resultados exploratorios E2
 
-Datos procedentes de la ejecución rápida con Tesla T4 (semilla 42, 3,000 imágenes de entrenamiento, una época, test exploratorio de 1,000 imágenes).
+Conservamos en este directorio la evidencia de nuestra ejecución preliminar E2. Utilizamos una GPU Tesla T4, semilla 42, 3 000 imágenes de entrenamiento, una época y un subconjunto de 1 000 imágenes de prueba. Estos valores corresponden exclusivamente a la etapa exploratoria y no deben confundirse con los resultados E3.
 
-- `resultados_e2.csv`: accuracy Top-1, tamaño de checkpoint serializado, latencia y VRAM para FP32, Fake-INT8 MHSA/MLP y FP16.
-- `teardown_por_bloque.csv`: parámetros y FLOPs analíticos aproximados para los 12 encoder blocks.
-- `train_history.csv`: validación después de la época.
-- `run_config.json`: entorno, tamaño de subconjuntos y parámetros de corrida.
+- `resultados_e2.csv`: exactitud Top-1, tamaño serializado del checkpoint, latencia y memoria GPU para FP32, INT8 simulado selectivamente en MHSA o MLP, y FP16 real.
+- `teardown_por_bloque.csv`: conteos de parámetros y estimaciones analíticas de FLOPs para los 12 bloques del encoder.
+- `train_history.csv`: registro de validación tras el entrenamiento.
+- `run_config.json`: configuración del entorno y de los subconjuntos evaluados.
 
-**Precauciones:** resultados exploratorios, no test final de 10,000 imágenes. Fake-INT8 no genera almacenamiento INT8 real. Las figuras PNG originales están en el ZIP recibido por el equipo y aparecen incrustadas en el notebook ejecutado, pero aún no están publicadas como archivos PNG independientes en GitHub. Consultar `DESIGN_LOG.md` para las limitaciones e interpretación de H1.
+En esta fase, la intervención INT8 fue una simulación sobre los pesos y no un modelo con almacenamiento entero real. Las mediciones de latencia y VRAM son observaciones preliminares, sensibles al estado de la GPU. Las visualizaciones se conservan en el notebook E2 ejecutado.
+
+Para las mediciones que utilizamos en el informe final, remitimos al [directorio E3](e3/) y al [registro de decisiones](../DESIGN_LOG.md).
