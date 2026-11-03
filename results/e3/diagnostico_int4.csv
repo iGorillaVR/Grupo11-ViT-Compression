@@ -1,0 +1,5 @@
+experimento,accuracy_pct,clases_predichas,clase_mas_frecuente_pct
+FP32,96.20,10,10.9
+FakeINT4_MHSA,91.80,10,11.8
+FakeINT4_MLP_1,13.35,5,74.7
+FakeINT4_MLP_2,13.35,5,74.7
