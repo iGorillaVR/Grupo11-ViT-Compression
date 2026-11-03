@@ -1,0 +1,7 @@
+experimento,tipo,accuracy_top1_pct,tamano_checkpoint_MB,latencia_ms_img_mediana,latencia_ms_img_p90,VRAM_pico_MiB,batch,device
+FP32_baseline,FP32 real,95.6,343.285519,15.07419962499057,15.13720869375561,639.71630859375,16,cuda
+FakeINT8_MHSA,simulación PTQ 8 bits sobre pesos; almacenamiento FP32,95.58,343.285519,15.073925062495164,15.16631059998872,969.6357421875,16,cuda
+FakeINT8_MLP,simulación PTQ 8 bits sobre pesos; almacenamiento FP32,95.56,343.285519,15.07620365623552,15.140607050000199,969.6357421875,16,cuda
+FakeINT4_MHSA,simulación PTQ 4 bits sobre pesos; almacenamiento FP32,91.25,343.285519,15.100672968742401,15.150369643720296,969.6357421875,16,cuda
+FakeINT4_MLP,simulación PTQ 4 bits sobre pesos; almacenamiento FP32,12.32,343.285519,14.48523850001493,14.73027685001398,969.6357421875,16,cuda
+FP16_real,pesos y activaciones FP16,95.61,171.672847,2.985050843733461,3.0518882125477376,759.44970703125,16,cuda
