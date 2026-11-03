@@ -45,7 +45,7 @@ Completar baseline y ablación con la misma configuración y hardware; diferenci
 Los pesos y datasets pertenecen a sus autores y distribuidores originales; comprobar los términos de uso antes de redistribuirlos.
 
 ## E3 — cuaderno final (11/11/2026)
-- [Notebook E3, Fases A/B/C](notebooks/Grupo11_E3_ViT_CIFAR10_FINAL.ipynb): protocolo reproducible de entrenamiento, teardown, FP16, fake-INT8/INT4, CIFAR-10-C, métricas y gráficos. **No ejecutado aún: no interpretar este código como resultados finales.**
+- [Notebook E3, Fases A/B/C](notebooks/Grupo11_E3_ViT_CIFAR10_FINAL.ipynb): protocolo reproducible de entrenamiento, teardown, FP16, fake-INT8/INT4, CIFAR-10-C, métricas y gráficos. **Ejecutado el 03/11/2026: incluye salidas de E3 y diagnóstico adicional INT4.**
 - [Fuentes y caché de los datasets](datasets/README.md): enlaces oficiales, integridad MD5 y persistencia en Google Drive por integrante. Los binarios grandes no se suben a GitHub.
 - El notebook E2 rápido mantiene la evidencia preliminar previa, separada del protocolo E3.
-- Para evidencia E3, ejecutar el notebook completo con GPU, guardar su ZIP de salida y publicar CSV/figuras reales en `results/e3/` junto con actualización del Design Log.
+- La evidencia E3 ejecutada, tablas y ZIP de CSV verificables están publicados en [`results/e3/`](results/e3/). Consultar el [`DESIGN_LOG.md`](DESIGN_LOG.md) para resultados y limitaciones; los PNG están incrustados como outputs en el notebook.
